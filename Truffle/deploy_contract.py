@@ -4,9 +4,8 @@ import json
 # Connect to Ethereum network (local Ganache or testnet)
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 
-# Ensure connection is successful
 # Check connection
-if not web3.is_connected():
+if not w3.is_connected():
     raise ConnectionError("Unable to connect to Ganache")
 
 # Load Truffle contract ABI and bytecode
@@ -20,9 +19,11 @@ bytecode = contract_data['bytecode']
 account = w3.eth.accounts[0]
 w3.eth.default_account = account
 
-# Deploy the contract
+# Deploy the contract with the required constructor argument
+initial_message = "Hello, Blockchain!"  # Example argument
+
 MyContract = w3.eth.contract(abi=abi, bytecode=bytecode)
-tx_hash = MyContract.constructor().transact()
+tx_hash = MyContract.constructor(initial_message).transact()
 tx_receipt = w3.eth.wait_for_transaction_receipt(tx_hash)
 
 # Print contract address

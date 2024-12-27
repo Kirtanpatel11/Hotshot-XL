@@ -142,11 +142,4 @@ module.exports = {
   //     }
   //   }
   // }
-
-  eth: {
-    provider: () => new HDWalletProvider(
-      privateKeys,
-      
-    )
-  }
 };
